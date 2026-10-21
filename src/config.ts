@@ -1,4 +1,5 @@
-// Данные матчей — файл data/matches.json из этого репозитория, отданный по HTTP.
-// Адрес менять не нужно.
+// По умолчанию — data/matches.json из публичного репозитория проекта.
+// Для другого сервера задайте EXPO_PUBLIC_MATCHES_URL в .env.local.
 export const MATCHES_URL =
-  'https://raw.githubusercontent.com/OWNER/REPO/main/data/matches.json';
+  process.env.EXPO_PUBLIC_MATCHES_URL ??
+  'https://raw.githubusercontent.com/VadyaProxima/test-app/main/data/matches.json';
