@@ -1,8 +1,8 @@
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { Animated, Easing } from 'react-native';
 
 export function FadeIn({ children }: { children: ReactNode }) {
-  const progress = useRef(new Animated.Value(0)).current;
+  const [progress] = useState(() => new Animated.Value(0));
 
   useEffect(() => {
     const animation = Animated.timing(progress, {
@@ -16,10 +16,19 @@ export function FadeIn({ children }: { children: ReactNode }) {
   }, [progress]);
 
   return (
-    <Animated.View style={{
-      opacity: progress,
-      transform: [{ translateY: progress.interpolate({ inputRange: [0, 1], outputRange: [6, 0] }) }],
-    }}>
+    <Animated.View
+      style={{
+        opacity: progress,
+        transform: [
+          {
+            translateY: progress.interpolate({
+              inputRange: [0, 1],
+              outputRange: [6, 0],
+            }),
+          },
+        ],
+      }}
+    >
       {children}
     </Animated.View>
   );

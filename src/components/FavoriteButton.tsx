@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text } from 'react-native';
+import { colors } from '../shared/theme/colors';
 
 type Props = {
   active: boolean;
@@ -11,7 +12,9 @@ export function FavoriteButton({ active, onPress }: Props) {
       onPress={onPress}
       hitSlop={4}
       accessibilityRole="button"
-      accessibilityLabel={active ? 'Убрать из избранного' : 'Добавить в избранное'}
+      accessibilityLabel={
+        active ? 'Убрать из избранного' : 'Добавить в избранное'
+      }
       accessibilityState={{ selected: active }}
       style={({ pressed }) => [
         styles.button,
@@ -19,7 +22,9 @@ export function FavoriteButton({ active, onPress }: Props) {
         pressed && styles.pressed,
       ]}
     >
-      <Text style={[styles.star, active && styles.active]}>{active ? '★' : '☆'}</Text>
+      <Text style={[styles.star, active && styles.active]}>
+        {active ? '★' : '☆'}
+      </Text>
     </Pressable>
   );
 }
@@ -32,12 +37,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 14,
     borderWidth: 1,
-    borderColor: '#e5e9e2',
-    backgroundColor: '#f7f9f5',
+    borderColor: colors.border,
+    backgroundColor: colors.raised,
   },
   selected: {
-    backgroundColor: '#eafaaf',
-    borderColor: '#d3e993',
+    backgroundColor: colors.accent,
+    borderColor: colors.accent,
   },
   pressed: {
     opacity: 0.65,
@@ -45,9 +50,9 @@ const styles = StyleSheet.create({
   star: {
     fontSize: 25,
     lineHeight: 30,
-    color: '#7a8476',
+    color: colors.muted,
   },
   active: {
-    color: '#36532b',
+    color: colors.accentInk,
   },
 });
