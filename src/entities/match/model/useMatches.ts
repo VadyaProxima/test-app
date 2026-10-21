@@ -57,6 +57,5 @@ export function useMatches() {
     isLoading: state.isLoading && state.data === null,
     isRefreshing: state.isLoading && state.data !== null,
     refresh,
-    isDemo: false,
   };
 }
