@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { getMatches } from '../api/getMatches';
+import { getMatches, MatchRequestError } from '../api/getMatches';
 import type { MatchesResponse } from './types';
 
 type State = {
@@ -11,7 +11,10 @@ type State = {
 
 export function useMatches() {
   const [state, setState] = useState<State>({
-    data: null, isLoading: true, error: null, updatedAt: null,
+    data: null,
+    isLoading: true,
+    error: null,
+    updatedAt: null,
   });
   const request = useRef<AbortController | null>(null);
 
@@ -25,7 +28,12 @@ export function useMatches() {
     try {
       const data = await getMatches(controller.signal);
       if (request.current === controller && !controller.signal.aborted) {
-        setState({ data, isLoading: false, error: null, updatedAt: new Date() });
+        setState({
+          data,
+          isLoading: false,
+          error: null,
+          updatedAt: new Date(),
+        });
       }
     } catch (error) {
       if (request.current !== controller) return;
@@ -34,9 +42,9 @@ export function useMatches() {
         isLoading: false,
         error: controller.signal.aborted
           ? 'Сервер не ответил вовремя. Попробуйте ещё раз.'
-          : error instanceof Error && error.message !== 'Failed to fetch'
+          : error instanceof MatchRequestError
             ? error.message
-            : 'Не удалось загрузить матчи. Проверьте подключение к интернету.',
+            : 'Не удалось загрузить матчи. Попробуйте ещё раз.',
       }));
     } finally {
       clearTimeout(timeout);
