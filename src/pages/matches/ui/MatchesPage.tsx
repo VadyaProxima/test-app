@@ -4,6 +4,7 @@ import { UpdatedAgo } from '../../../components/UpdatedAgo';
 import { filterMatches, MatchCard, useMatches, type MatchFilter } from '../../../entities/match';
 import { useFavorites } from '../../../features/match-favorites';
 import { colors } from '../../../shared/theme/colors';
+import { FadeIn } from '../../../shared/ui/FadeIn';
 
 const filters: { value: MatchFilter; label: string }[] = [
   { value: 'all', label: 'Все' },
@@ -37,7 +38,9 @@ export function MatchesPage() {
         onRefresh={refresh}
         refreshing={isRefreshing}
         renderItem={({ item }) => (
-          <MatchCard match={item} favorite={isFavorite(item.id)} onToggleFavorite={() => toggle(item.id)} />
+          <FadeIn key={`${filter}:${item.id}`}>
+            <MatchCard match={item} favorite={isFavorite(item.id)} onToggleFavorite={() => toggle(item.id)} />
+          </FadeIn>
         )}
         ListHeaderComponent={
           <>
@@ -100,9 +103,11 @@ export function MatchesPage() {
           </>
         }
         ListEmptyComponent={
+          <FadeIn key={filter}>
           <View style={styles.empty}>
             {isLoading ? <><ActivityIndicator size="large" color={colors.green} /><Text style={styles.emptyTitle}>Загружаем матчи</Text><Text style={styles.emptyText}>Готовим расписание тура…</Text></> : error && !data ? <><Text style={styles.emptySymbol}>!</Text><Text style={styles.emptyTitle}>Не удалось загрузить матчи</Text><Text style={styles.emptyText}>Проверьте соединение и попробуйте ещё раз.</Text></> : <><Text style={styles.emptySymbol}>—</Text><Text style={styles.emptyTitle}>{query || filter !== 'all' ? 'Матчи не найдены' : 'В этом туре пока нет матчей'}</Text><Text style={styles.emptyText}>{query || filter !== 'all' ? 'Попробуйте другое название клуба или измените фильтр.' : 'Обновите расписание чуть позже.'}</Text>{(query || filter !== 'all') && <Pressable accessibilityRole="button" onPress={resetFilters} style={styles.resetButton}><Text style={styles.retryText}>Сбросить фильтры</Text></Pressable>}</>}
           </View>
+          </FadeIn>
         }
         ListFooterComponent={<View style={styles.footer}><View style={styles.footerLine} /><Text style={styles.footerText}>Футбол, за которым хочется следить.</Text><Text style={styles.footerHint}>Отмечайте любимые матчи звёздочкой</Text></View>}
       />
@@ -163,7 +168,7 @@ const styles = StyleSheet.create({
   compactSearch: { width: '100%' },
   searchIcon: { width: 12, height: 12, borderRadius: 7, borderWidth: 1.5, borderColor: colors.muted, marginRight: 2 },
   searchHandle: { position: 'absolute', width: 5, height: 1.5, backgroundColor: colors.muted, right: -4, bottom: -2, transform: [{ rotate: '45deg' }] },
-  searchInput: { flex: 1, minWidth: 0, fontSize: 12, color: colors.ink, paddingVertical: 12 },
+  searchInput: { flex: 1, minWidth: 0, fontSize: 12, color: colors.ink, paddingVertical: 12, paddingRight: 12 },
   clear: { fontSize: 20, color: colors.muted },
   metadata: { flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', alignItems: 'center', gap: 8, marginBottom: 18 },
   timezone: { color: colors.muted, fontSize: 10 },
