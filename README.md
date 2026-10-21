@@ -19,6 +19,16 @@ npm start        # QR-код для Expo Go на телефоне
 
 Проект — Expo + React Native + TypeScript. Если раньше вы писали только на React для веба, это не страшно: вместо `div` здесь `View`, вместо `span` — `Text`, вместо `button` — `Pressable`, списки — `FlatList`.
 
+## Деплой на Vercel
+
+В репозитории есть `vercel.json`: Vercel запускает `npm run build` и публикует готовую папку `dist`. Команда `npm run web` предназначена для разработки.
+
+При импорте репозитория выберите Framework Preset **Other**, Root Directory **корень репозитория**, Production Branch **main**. Настройки сборки: Build Command — `npm run build`, Output Directory — `dist`, Install Command — `npm ci`. После слияния изменений запустите новый деплой из `main`.
+
+Если вместо страницы скачивается файл с содержимым `index.ts`, опубликованы исходники. Проверьте, что Root Directory не указывает на `src`, сборка не отключена, а в результате деплоя публикуется `dist/index.html`.
+
+По умолчанию матчи загружаются из JSON этого репозитория. Другой адрес можно задать переменной `EXPO_PUBLIC_MATCHES_URL` в настройках Vercel и запустить новую сборку.
+
 ## Часть 1. Экран «Матчи тура»
 
 Файл `src/screens/MatchesScreen.tsx` сейчас пустой. Сделайте экран:
