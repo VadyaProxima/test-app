@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { MatchesPage } from '../pages/matches';
-import { colors } from '../shared/theme/colors';
+import { MatchesPage } from '../../pages/matches';
+import { colors } from '../../shared/config';
 
 export function App() {
   return (

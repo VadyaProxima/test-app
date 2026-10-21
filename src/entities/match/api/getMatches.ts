@@ -1,4 +1,4 @@
-import { MATCHES_URL } from '../../../config';
+import { MATCHES_URL } from '../../../shared/config';
 import type { Match, MatchesResponse, Team } from '../model/types';
 
 export class MatchRequestError extends Error {

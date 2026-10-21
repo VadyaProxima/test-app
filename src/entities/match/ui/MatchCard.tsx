@@ -1,13 +1,12 @@
 import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
-import { FavoriteButton } from '../../../components/FavoriteButton';
-import { colors } from '../../../shared/theme/colors';
+import type { ReactNode } from 'react';
+import { colors } from '../../../shared/config';
 import { formatMatchDate, getMatchStatusLabel } from '../model/matches';
 import type { Match } from '../model/types';
 
 type Props = {
   match: Match;
-  favorite: boolean;
-  onToggleFavorite: () => void;
+  actions?: ReactNode;
 };
 
 const clubColors: Record<string, string> = {
@@ -59,7 +58,7 @@ function Club({ club, compact }: { club: Match['home']; compact: boolean }) {
   );
 }
 
-export function MatchCard({ match, favorite, onToggleFavorite }: Props) {
+export function MatchCard({ match, actions }: Props) {
   const compact = useWindowDimensions().width < 600;
   const live = match.status === 'live';
   const postponed = match.status === 'postponed';
@@ -91,7 +90,7 @@ export function MatchCard({ match, favorite, onToggleFavorite }: Props) {
             {getMatchStatusLabel(match)}
           </Text>
         </View>
-        <FavoriteButton active={favorite} onPress={onToggleFavorite} />
+        {actions}
       </View>
 
       <View style={styles.matchup}>

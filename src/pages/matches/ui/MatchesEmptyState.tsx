@@ -5,7 +5,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import { colors } from '../../../shared/theme/colors';
+import { colors } from '../../../shared/config';
 
 type Props = {
   loading: boolean;
