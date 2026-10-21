@@ -3,5 +3,5 @@
   "compilerOptions": {
     "strict": true
   },
-  "include": ["App.tsx", "index.ts", "src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts"]
+  "include": ["App.tsx", "index.ts", "playwright.config.ts", "src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts"]
 }
